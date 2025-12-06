@@ -5,7 +5,7 @@ using namespace std;
 Estudiante::Estudiante(int id, const string& nombre) : id(id), nombre(nombre), numNotas(0) {}
 
 void Estudiante::agregarNota(int idCurso, float valor) {
-    if (numNotas < 10) { // Límite por el arreglo fijo (10) definido en el .h
+    if (numNotas < 10) { 
         notas[numNotas] = {idCurso, valor};
         numNotas++;
     } else {

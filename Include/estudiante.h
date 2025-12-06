@@ -18,6 +18,8 @@ protected:
     Nota notas[10]; 
     int numNotas;   
 public:
+    Estudiante() : id(0), nombre(""), numNotas(0) {}
+
     Estudiante(int id, const string& nombre);
     virtual ~Estudiante() {} 
     
