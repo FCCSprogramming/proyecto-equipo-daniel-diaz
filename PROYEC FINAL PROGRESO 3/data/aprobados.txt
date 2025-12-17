@@ -1,0 +1,2 @@
+--- ESTUDIANTES APROBADOS (PROMEDIO >= 10.5) ---
+ID: 1, Nombre: Daniel, Promedio: 18
