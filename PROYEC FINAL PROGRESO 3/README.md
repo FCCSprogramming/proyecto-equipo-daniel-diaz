@@ -1,36 +1,47 @@
-#PROYECTO FINAL - SISTEMA DE GESTIÓN ACADÉMICA (ENTREGA FINAL)
+# Sistema de Gestión Académica - Proyecto Final CC112
 
-#1. Estructura y Herramientas
-* **Sistema Operativo:** Windows 11 (64-bit)
-* **Compilador:** MinGW-w64 (TDM-GCC 9.2.0)
-* **Herramienta de Compilación:** Makefile (COMPATIBLE con `mingw32-make`).
+Soy Daniel Díaz y este es mi proyecto final para el curso de Fundamentos de Programación. He hecho un sistema en C++ para toda la lógica de una escuela : alumnos, cursos, inscripciones y lo más importante, el manejo de actas de notas y archivos.
 
-#2. Características Implementadas
-* Modularidad, Herencia/Polimorfismo, Manejo de Vectores.
-* **Persistencia:** Guardado/Carga Binaria, Exportación de Texto, Acceso Aleatorio (`seekg`).
+## 1. Descripción del proyecto
+El objetivo de este sistema es permitir que un usuario (administrador) pueda registrar alumnos y cursos de buena manera. No solo se queda en la RAM, sino que implementé  que los datos se guarden en archivos binarios y se puedan recuperar después. 
 
-#3. Pruebas de Ejecución (Requisito 6.2)
+El programa permite:
+* Registrar alumnos y cursos usando herencia.
+* Manejar inscripciones y notas parciales.
+* Generar reportes automáticos de alumnos aprobados.
+* Guardar y cargar la base de datos completa.
 
-#A. Ejecución del Programa
-1.  Asegúrate de tener el código corregido en todas las carpetas.
-2.  Abrir el Símbolo del Sistema (CMD) de Windows.
-3.  Navegar a la carpeta raíz del proyecto.
-4.  Ejecutar el comando de compilación y ejecución:
-    ```bash
-    mingw32-make run
-    ```
-#B. Secuencia de Pruebas Obligatorias
+## 2. Diseño de clases (POO)
 
-| Opción | Entrada a Teclear | Propósito / Resultado Esperado |
-| :---: | :--- | :--- |
-| **0** | `0` | Carga inicial (mostrará mensaje de archivo no encontrado). |
-| **1** | ID: `1`, Nombre: `Pedro Lopez` | Registro exitoso (Estudiante Aprobado). |
-| **1** | ID: `2`, Nombre: `Laura Gomez` | Registro exitoso (Estudiante Reprobado). |
-| **2** | ID: `101`, Nombre: `Fundamentos de C++` | Registro exitoso. |
-| **3** | Estudiante: `1` / Curso: `101` / Nota: `18.5` | Registro de Nota. |
-| **3** | Estudiante: `2` / Curso: `101` / Nota: `10.0` | Registro de Nota. |
-| **4** | `4` | **Captura 1:** Listado completo con promedios. |
-| **7** | `7` | **Genera:** `data/aprobados.txt` (Solo debe aparecer Pedro). |
-| **5** | `5` | **Genera:** `data/base_datos_cc112.bin` (Persistencia completa). |
-| **8** | ID a buscar: `2` | **Captura 2:** Acceso directo al registro de Laura (ID 2). |
-| **0** | `0` | Salir. |
+* **Persona (Clase Base):** Es una clase abstracta que define los datos mínimos. Tiene el método virtual puro `mostrarInfo()`, lo que obliga a las clases hijas a implementarlo.
+* **Estudiante (Clase Derivada):** Hereda de Persona. Aquí manejo el código del alumno y sus notas. Sobrescribí `calcularDesempeño()` para que saque el promedio real según las notas ingresadas.
+* **Curso:** Clase independiente que contiene la info de las materias.
+* **Sistema:** Esta es la clase "cerebro". Aquí es donde ocurre toda la gestión de los vectores de estudiantes y cursos, y donde se conectan todas las piezas.
+
+## 3. Persistencia y Archivos
+El sistema maneja tres niveles de archivos:
+1. **Texto (.txt):** Para exportar a los alumnos aprobados (los que tienen promedio satisfactorio).
+2. **Binario (.dat):** Donde guardo toda la "base de datos" de golpe para no perder nada al cerrar el programa.
+3. **Acceso Aleatorio:** Usé `seekg` y `seekp` para poder buscar un estudiante por su ID directamente en el archivo sin tener que leer todo el documento desde el inicio. Esto fue de lo más complicado de programar pero ya funciona bien.
+
+## 4.Guía de Compilación y Ejecución
+He configurado un **Makefile** para automatizar el proceso. Para compilar y ejecutar el proyecto, sigue estos pasos:
+
+1. **Compilar:** Escribe `make` en la terminal. Esto creará los directorios necesarios y el ejecutable.
+2. **Ejecutar:** Escribe `./SistemaAcademica` para iniciar el programa.
+3. **Limpiar:** Si deseas borrar los archivos objeto y los generados por el sistema, usa `make clean`.
+
+## 5. Ejemplo de ejecución
+Así es como se ve el menú cuando el sistema arranca:
+
+--- SISTEMA DE GESTION ACADEMICA (UNI) ---
+1. Registrar Estudiante
+2. Registrar Curso
+3. Inscribir Alumno
+4. Reporte de Aprobados (TXT)
+5. Guardar todo (Binario)
+6. Salir
+> Seleccione una opcion: 1
+
+[SISTEMA] Registrando a: Daniel Diaz...
+[SISTEMA] Alumno guardado con exito.
